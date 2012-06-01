@@ -1,6 +1,12 @@
 /* File: boggle.cpp
  * ----------------
- * Harsh Pai
+ * This work is licensed under a Creative Commons Attribution 3.0 United States License.
+ * http://creativecommons.org/licenses/by/3.0/us/
+ * This work is based on the "Boggle" Assignment of Programming Abstractions (CS 106B) 
+ * course from Stanford Engineering Everywhere taught by Julie Zelenski.
+ * http://see.stanford.edu/see/materials/icspacs106b/assignments.aspx
+ *
+ * Last Modified 2/14/2012 by Harsh Pai
  */
  
 #include "genlib.h"
@@ -24,9 +30,8 @@ string BigBoggleCubes[25]  =
 "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR", 
 "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
-//strucuture that holds 
-//the coordinates of a cube 
-//in board grid
+//strucuture that holds the coordinates of a cube 
+//in the board grid
 struct cubeT{
 	int row,col;
 };
@@ -52,7 +57,11 @@ string const NOT ="not";
 string const OH_REALLY ="oh really";
 string const YAH_AS_IF ="yah as if";
 
-//function protoypes
+/* 
+ * These are the prototypes for functions private to this module.  These
+ * helper functions are used to implement the functions which are exported 
+ * from this module (see .h for prototypes of the exported functions)
+ */
 static void Welcome();
 void GiveInstructions();
 bool GetYesOrNo(string prompt);
@@ -70,20 +79,22 @@ void SetCubeFaces(Grid<char> &board, string cubes[]);
 Set<string> PlayHumanTurn(Grid<char> &board,Lexicon &lexicon);
 bool CheckWord(string word,Lexicon &lexicon,Set<string> &guessedWords,Grid<char> &board);
 int CubeCmpFn(cubeT one, cubeT two);
-bool RecursiveMakeWord(string word, int index, Grid<char> &board,cubeT curCube, Set<cubeT> &usedCubes,Vector<cubeT> &wordPath);
-bool CanMakeWord(string word,Grid<char> &board,Set<cubeT> &usedCubes,Vector<cubeT> &wordPath);
+bool RecursiveMakeWord(string word, int index, Grid<char> &board,cubeT curCube, 
+					   Set<cubeT> &usedCubes,Vector<cubeT> &wordPath);
+bool CanMakeWord(string word,Grid<char> &board,Set<cubeT> &usedCubes,
+				 Vector<cubeT> &wordPath);
 Set<cubeT> GetAdjoiningCubes(cubeT cube,Set<cubeT> &usedCubes,Grid<char> &board);
 bool IsInBounds(cubeT cube,Grid<char> &board);
 void HighlightWord(Vector<cubeT> &wordPath);
 void PlayComputerTurn(Grid<char> &board,Lexicon &lexicon,Set<string> guessedWords);
-void RecursiveSearchWords(string word, cubeT curCube, Set<cubeT> &usedCubes, Lexicon &lexicon, Set<string> &guessedWords, Grid<char> &board );
+void RecursiveSearchWords(string word, cubeT curCube, Set<cubeT> &usedCubes, 
+						  Lexicon &lexicon, Set<string> &guessedWords, Grid<char> &board );
 bool CheckQu(string word, int &index);
 string AddLetter(string word,char nextLetter);
 void PlayBoggle(int dimension);
 
 int main()
 {
-
 	Randomize();
 	SetWindowSize(9, 5);
 	InitGraphics();
@@ -97,6 +108,7 @@ int main()
 void PlayBoggle(int dimension){
 	string prompt = "Would you like to play again? ";
 	Lexicon lexicon("lexicon.dat");
+	// Loop that keeps repeating the game until the user says no
 	while(true){
 		Grid<char> board = SetupGameBoard(dimension);
 		Set<string> guessedWords = PlayHumanTurn(board,lexicon);
@@ -358,7 +370,7 @@ bool IsInBounds(cubeT cube,Grid<char> &board){
 //on the board to form the same word, the word is counted at most once)
 //• it can be formed on the board (i.e., it is composed of adjoining letters and each cube is used
 //at most once)
-//If any of these conditions fail, the word is rejected anf the function returns false.
+//If any of these conditions fail, the word is rejected and the function returns false.
 bool CheckWord(string word,Lexicon &lexicon,Set<string> &guessedWords,Grid<char> &board){
 	
 	Set<cubeT> usedCubes(CubeCmpFn);
@@ -528,7 +540,7 @@ string GetBoardString(int boardSize){
 //Usage:	if(ForceBoardConfig())	...
 //-------------------------------------------------
 //This predicate function asks user if board configuration will
-//be manual.
+//be manual or auto.
 bool ForceBoardConfig(){
 
 	cout<<"\nI'll give you a chance to set up the board to your specification."<<endl

@@ -4,6 +4,11 @@
  * Implements the graphics support functions for Boggle program.
  * Last modified Mon Oct 15 09:40:38 2007 juliez
  *
+ * This work is licensed under a Creative Commons Attribution 3.0 United States License.
+ * http://creativecommons.org/licenses/by/3.0/us/
+ * This work is based on the "Boggle" Assignment of Programming Abstractions (CS 106B) 
+ * course from Stanford Engineering Everywhere taught by Julie Zelenski.
+ * http://see.stanford.edu/see/materials/icspacs106b/assignments.aspx
  *
  * General implementation notes
  * ----------------------------
